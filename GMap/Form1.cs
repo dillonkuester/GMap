@@ -27,6 +27,8 @@ namespace GMap
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            GMapProviders.GoogleMap.ApiKey = "AIzaSyCZHQ_suCSP2e4AhtCH6ZRSWAC7mb9cVwQ";
+
             map.ShowCenter = false; 
         }
 
@@ -79,6 +81,24 @@ namespace GMap
             var routes = new GMapOverlay("routes");
             routes.Routes.Add(r);
             map.Overlays.Add(routes);
+
+            // use the route object to get a distance as a double
+            //either convert to string or concatenate. 
+            lblDistance.Text = route.Distance + " Km";
+        }
+
+        private void btnAddPoly_Click(object sender, EventArgs e)
+        {
+            //make the object
+            var polygon = new GMapPolygon(_points, "My Area")
+            {
+                Stroke = new Pen(Color.BurlyWood, 2),
+                Fill = new SolidBrush(Color.Brown)
+            };
+            //create overlay and add it to map
+            var polygons = new GMapOverlay("polygons");
+            polygons.Polygons.Add(polygon);
+            map.Overlays.Add(polygons);
         }
     }
 }
